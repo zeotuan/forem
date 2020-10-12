@@ -78,6 +78,12 @@ RSpec.describe "/admin/config", type: :request do
                                           confirmation: confirmation_message }
           expect(SiteConfig.authentication_providers).to eq([provider])
         end
+
+        it "allows all authentication providers to be unset" do
+          post "/admin/config", params: { site_config: { authentication_providers: [] },
+                                          confirmation: confirmation_message }
+          expect(SiteConfig.authentication_providers).to be_empty
+        end
       end
 
       describe "Community Content" do
@@ -550,6 +556,17 @@ RSpec.describe "/admin/config", type: :request do
           post "/admin/config", params: { site_config: { spam_trigger_terms: spam_trigger_terms },
                                           confirmation: confirmation_message }
           expect(SiteConfig.spam_trigger_terms).to eq(["hey", "pokemon go hack"])
+        end
+
+        it "updates recaptcha_site_key and recaptcha_secret_key" do
+          site_key = "hi-ho"
+          secret_key = "lets-go"
+          post "/admin/config", params: {
+            site_config: { recaptcha_site_key: site_key, recaptcha_secret_key: secret_key },
+            confirmation: confirmation_message
+          }
+          expect(SiteConfig.recaptcha_site_key).to eq site_key
+          expect(SiteConfig.recaptcha_secret_key).to eq secret_key
         end
       end
 
