@@ -1,9 +1,5 @@
 <% title "Welcome!" %>
 
-<<<<<<< HEAD
-<% if params[:state] == "new-user" %>
-  <%= render "shared/authentication/email_registration_form" %>
-=======
 <% if params[:state] == "email_signup" && SiteConfig.allow_email_password_registration %>
   <%= render "shared/authentication/email_registration_form" %>
 <% elsif params[:state] == "email_signup" %>
@@ -12,7 +8,6 @@
   </div>
 <% elsif SiteConfig.waiting_on_first_user %>
   <%= render "shared/authentication/initial_account_wizard" %>
->>>>>>> 66b14fc0bf2f8edb772b9704e38b4beb9f78c29d
 <% else %>
   <%= render "devise/shared/authorization_error" %>
   <%= render "devise/registrations/registration_form" %>
