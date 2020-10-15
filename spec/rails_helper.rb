@@ -49,6 +49,7 @@ allowed_sites = [
   "developer.microsoft.com/en-us/microsoft-edge/tools/webdriver",
   "api.knapsackpro.com",
   "elasticsearch",
+  "redis",
 ]
 WebMock.disable_net_connect!(allow_localhost: true, allow: allowed_sites)
 
