@@ -9,7 +9,7 @@ steps:
       DATABASE_URL: postgresql://forem:forem@db:5432/PracticalDeveloper_test
       BUILDKITE_DOCKER_COMPOSE_CONTAINER: rails
     plugins:
-      - docker-compose#v3.5.0:
+      - docker-compose#v3.7.0:
           run: rails
           config: docker-compose-test.yml
     parallelism: 3
