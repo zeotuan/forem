@@ -12,7 +12,6 @@ steps:
       - docker-compose#v3.7.0:
           run: rails
           config: docker-compose-test.yml
-    parallelism: 3
     agents:
       queue: $BUILDKITE_AGENT_META_DATA_QUEUE
     branches: "mstruve/*"
