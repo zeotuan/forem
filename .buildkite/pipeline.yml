@@ -8,6 +8,8 @@ steps:
       RAILS_ENV: test
       DATABASE_URL: postgresql://forem:forem@db:5432/PracticalDeveloper_test
       BUILDKITE_DOCKER_COMPOSE_CONTAINER: rails
+      SE_OPTS: '-timeout 10000 -browserTimeout 10000'
+      JAVA_OPTS: '-Xmx1024m'
     plugins:
       - docker-compose#v3.7.0:
           run: rails
