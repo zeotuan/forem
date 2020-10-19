@@ -15,6 +15,7 @@ RSpec.configure do |config|
     browser_options.args << "--no-sandbox"
     browser_options.args << "--window-size=1400,2000"
     browser_options.args << "--disable-dev-shm-usage"
+    browser_options.args << "--disable-notifications"
     browser_options.args << "--disable-site-isolation-trials"
     browser_options.headless!
 
