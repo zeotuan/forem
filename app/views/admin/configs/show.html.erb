@@ -980,6 +980,14 @@
             <div id="newsletterBodyContainer" class="card-body collapse hide" aria-labelledby="newsletterBodyContainer">
               <fieldset class="flex flex-column gap-4">
                 <div class="crayons-field">
+                  <%= admin_config_label :mailchimp_api_key, "Mailchimp API Key" %>
+                  <%= admin_config_description Constants::SiteConfig::DETAILS[:mailchimp_api_key][:description] %>
+                  <%= f.text_field :mailchimp_api_key,
+                                   class: "crayons-textfield",
+                                   value: SiteConfig.mailchimp_api_key %>
+                </div>
+
+                <div class="crayons-field">
                   <%= admin_config_label :mailchimp_newsletter_id, "Main Newsletter" %>
                   <%= admin_config_description Constants::SiteConfig::DETAILS[:mailchimp_newsletter_id][:description] %>
                   <%= f.text_field :mailchimp_newsletter_id,
@@ -1239,6 +1247,22 @@
                                    class: "crayons-textfield",
                                    value: SiteConfig.feed_strategy,
                                    placeholder: Constants::SiteConfig::DETAILS[:feed_strategy][:placeholder] %>
+                </div>
+                <div class="crayons-field">
+                  <%= admin_config_label :tag_feed_minimum_score %>
+                  <%= admin_config_description Constants::SiteConfig::DETAILS[:tag_feed_minimum_score][:description] %>
+                  <%= f.number_field :tag_feed_minimum_score,
+                                     class: "crayons-textfield",
+                                     value: SiteConfig.tag_feed_minimum_score,
+                                     placeholder: Constants::SiteConfig::DETAILS[:tag_feed_minimum_score][:placeholder] %>
+                </div>
+                <div class="crayons-field">
+                  <%= admin_config_label :home_feed_minimum_score %>
+                  <%= admin_config_description Constants::SiteConfig::DETAILS[:home_feed_minimum_score][:description] %>
+                  <%= f.number_field :home_feed_minimum_score,
+                                     class: "crayons-textfield",
+                                     value: SiteConfig.home_feed_minimum_score,
+                                     placeholder: Constants::SiteConfig::DETAILS[:home_feed_minimum_score][:placeholder] %>
                 </div>
                 <div class="crayons-field">
                   <%= admin_config_label :default_font %>
