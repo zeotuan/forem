@@ -57,7 +57,7 @@
             </label>
           <% else %>
             <label class="crayons-field__label" for="<%= "profile[#{field.attribute_name}]" %>">
-              <%= field.label %>
+              <%= field.label.gsub("Education", "Industry") %>
             </label>
             <%= f.public_send(field["input_type"], "profile[#{field.attribute_name}]", value: @user.profile.data[field.attribute_name], class: "crayons-textfield") %>
           <% end %>
