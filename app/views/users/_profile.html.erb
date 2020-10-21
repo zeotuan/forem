@@ -15,26 +15,18 @@
   </div>
 <% end %>
 
-<%= form_for @user, html: { class: "sticky-footer-form" } do |f| %>
+<%= form_with(url: profile_path(@user.profile_id), method: "put", html: { class: "sticky-footer-form" }) do |f| %>
+
   <div class="crayons-card mb-6 grid grid-flow-row gap-6 p-6">
+    <h2>User</h2>
     <div class="crayons-field">
       <%= f.label :email, class: "crayons-field__label" %>
-      <%= f.text_field :email, class: "crayons-textfield", placeholder: "john.doe@example.com" %>
-    </div>
-
-    <div class="crayons-field crayons-field--checkbox">
-      <%= f.check_box :email_public, class: "crayons-checkbox" %>
-      <%= f.label :email_public, "Display email on profile", class: "crayons-field__label" %>
+      <%= f.text_field "user[email]", class: "crayons-textfield", placeholder: "john.doe@example.com", value: @user.email %>
     </div>
 
     <div class="crayons-field">
       <%= f.label :username, class: "crayons-field__label" %>
-      <%= f.text_field :username, maxlength: 30, class: "crayons-textfield", placeholder: "johndoe" %>
-    </div>
-
-    <div class="crayons-field">
-      <%= f.label :name, class: "crayons-field__label" %>
-      <%= f.text_field :name, maxlength: 100, class: "crayons-textfield", placeholder: "John Doe" %>
+      <%= f.text_field "user[username]", maxlength: 30, class: "crayons-textfield", placeholder: "johndoe", value: @user.username %>
     </div>
 
     <div class="crayons-field">
@@ -43,10 +35,11 @@
       <div class="flex items-center">
         <% if @user.profile_image_url.present? %>
           <span class="crayons-avatar crayons-avatar--xl mr-2"><img alt="<%= @user.username %> profile image" src="<%= Images::Profile.call(@user.profile_image_url, length: 50) %>" class="crayons-avatar__image" /></span>
-          <%= f.file_field :profile_image, accept: "image/*", class: "crayons-card crayons-card--secondary p-3 flex items-center flex-1 w-100" %>
+          <%= f.file_field "user[profile_image]", accept: "image/*", class: "crayons-card crayons-card--secondary p-3 flex items-center flex-1 w-100" %>
         <% end %>
       </div>
     </div>
+<<<<<<< HEAD
 
     <div class="crayons-field">
       <%= f.label :website_url, class: "crayons-field__label" %>
@@ -106,12 +99,33 @@
       <%= f.text_area :available_for, maxlength: 500, class: "crayons-textfield", rows: 5 %>
       <p class="crayons-field__description">What kinds of collaborations or discussions are you available for? What's a good reason to say <em>Hey!</em> to you these days?</p>
     </div>
+=======
+>>>>>>> f428aa85fc564291df593f5648ff99968e1ddbbd
   </div>
 
-  <div class="crayons-card mb-6 grid gap-4 p-6">
-    <h2>Branding</h2>
-    <%= render partial: "shared/logo_design", locals: { f: f, account: @user } %>
+  <% ProfileFieldGroup.non_empty_groups.each do |group| %>
+    <div class="crayons-card mb-6 grid grid-flow-row gap-6 p-6">
+      <h2><%= group.name %></h2>
+      <% if group.description.present? %>
+        <div class="color-base-40"><%= group.description %></div>
+      <% end %>
+      <% group.profile_fields.each do |field| %>
+        <div class="crayons-field <%= "crayons-field--check_box" if field.input_type == "check_box" %>">
+          <div><%= field.label %></div>
+          <% if field["input_type"] == "check_box" %>
+            <%= f.public_send(field["input_type"], "profile[#{field.attribute_name}]", checked: @user.profile.data[field.attribute_name]) %>
+          <% else %>
+            <%= f.public_send(field["input_type"], "profile[#{field.attribute_name}]", value: @user.profile.data[field.attribute_name]) %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="save-footer crayons-card mb-6 grid p-6">
+    <button type="submit" class="crayons-btn">Save Profile Information</button>
   </div>
+<<<<<<< HEAD
 
   <div class="crayons-card mb-6 grid gap-6 p-6">
     <h2>Links</h2>
@@ -179,4 +193,6 @@
     </div>
   </div>
 
+=======
+>>>>>>> f428aa85fc564291df593f5648ff99968e1ddbbd
 <% end %>
