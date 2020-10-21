@@ -22,16 +22,22 @@ RSpec.describe "User edits their integrations", type: :system, js: true do
   describe "via visiting /settings" do
     before do
       visit "/settings"
-    end
-
-    it "has connect-to-stackbit prompt" do
-      click_link "Integrations"
       puts "*" * 100
       puts page.driver.browser.manage.logs.get(:browser)
       puts page.driver.options.to_s
       puts Capybara.javascript_driver
       puts Capybara.current_driver
       puts "*" * 100
+    end
+
+    it "has connect-to-stackbit prompt" do
+      find_link("Integrations").click
+      puts "-" * 100
+      puts page.driver.browser.manage.logs.get(:browser)
+      # puts page.driver.options.to_s
+      # puts Capybara.javascript_driver
+      # puts Capybara.current_driver
+      puts "-" * 100
 
       expect(page).to have_text("Connect to Stackbit")
     end

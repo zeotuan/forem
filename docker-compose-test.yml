@@ -9,6 +9,7 @@ services:
     container_name: forem_rails
     volumes:
       - ./tmp/screenshots:/opt/apps/forem/tmp/screenshots
+      - .:/opt/apps/forem:delegated
     ports:
       - "3000:3000"
     depends_on:

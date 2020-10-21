@@ -83,6 +83,7 @@ RSpec.describe "User index", type: :system, stub_elasticsearch: true do
   context "when visiting own profile" do
     before do
       sign_in user
+      sleep(1)
       visit "/#{user.username}"
     end
 
