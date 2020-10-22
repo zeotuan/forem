@@ -28,12 +28,18 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) do
     if ENV["SELENIUM_URL"].present?
-      # Support use of remote chrome testing.
-      Capybara.server_host = ENV.fetch("CAPYBARA_SERVER_HOST") { "0.0.0.0" }
-      ip = Socket.ip_address_list.detect(&:ipv4_private?).ip_address
-      host! URI::HTTP.build(host: ip, port: Capybara.server_port).to_s
+      Capybara.server_port = ENV['TEST_APP_PORT'].to_i
+      Capybara.app_host = "http://#{ENV['TEST_APP_HOST']}:#{ENV['TEST_APP_PORT']}"
+      Capybara.server_host = '0.0.0.0'
 
-      driven_by :selenium, using: :chrome, screen_size: [1400, 2000], options: { url: ENV["SELENIUM_URL"] }
+      Capybara::Selenium::Driver.new app,
+        url: ENV['SELENIUM_HUB_URL'],
+        browser: :remote,
+        desired_capabilities: Selenium::WebDriver::Remote::Capabilities.chrome(
+          chromeOptions: { args: %w(headless disable-gpu) }
+        )
+
+      driven_by :headless_chrome, screen_size: [1400, 2000]
     else
       # options from https://github.com/teamcapybara/capybara#selenium
       chrome = ENV["HEADLESS"] == "false" ? :selenium_chrome : :selenium_chrome_headless

@@ -11,9 +11,6 @@ RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo -o /etc/yum.repos.d/yarn.repo 
                    && dnf -y clean all \
                    && rm -rf /var/cache/yum
 
-RUN if [ "$RAILS_ENV" = "test" ] ; then dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y && \
-				        dnf -y --enablerepo google-chrome install google-chrome-stable && yum clean all && : ; fi
-
 ENV APP_USER=forem
 ENV APP_UID=1000
 ENV APP_GID=1000

@@ -9,6 +9,7 @@ services:
     container_name: forem_rails
     volumes:
       - ./tmp/screenshots:/opt/apps/forem/tmp/screenshots
+      - .:/opt/apps/forem:delegated
     ports:
       - "3000:3000"
     depends_on:
@@ -16,8 +17,13 @@ services:
       - db
       - elasticsearch
       - redis
+      - hub
+      - chrome
 #      - yarn
     environment:
+      SELENIUM_HUB_URL: http://hub:4444/wd/hub"
+      TEST_APP_HOST: web
+      TEST_APP_PORT: 3001
       RAILS_ENV: test
       DATABASE_URL: postgresql://forem:forem@db:5432/PracticalDeveloper_test
       ELASTICSEARCH_URL: http://elasticsearch:9200
@@ -51,7 +57,26 @@ services:
       KNAPSACK_PRO_CI_NODE_TOTAL: 3
       KNAPSACK_PRO_TEST_FILE_PATTERN: "{spec/system/user/*.rb, spec/services/rss_reader_spec.rb, spec/services/flare_tag_spec.rb}"
       COVERAGE_REPORTS_TOTAL: 4
+    networks:
+      main:
+        aliases:
+          - web
     entrypoint: ["dockerize", "-wait", "tcp://db:5432", "-wait", "http://elasticsearch:9200", "-wait", "tcp://redis:6379", "-timeout", "2700s", "./scripts/entrypoint-dev.sh"]
+
+  hub:
+    image: selenium/hub:3.141.59-iron
+    ports:
+      - "4444:4444"
+    networks:
+      main:
+  chrome:
+    image: selenium/node-chrome:3.141.59-iron
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
+    networks:
+      main:
 
   bundle:
     image: forem-test:latest
@@ -60,28 +85,6 @@ services:
       RAILS_ENV: test
     entrypoint: ["bash"]
     command: ["./scripts/bundle.sh"]
-
-  # webpacker:
-  #   image: forem-test:latest
-  #   container_name: forem_webpacker
-  #   depends_on:
-  #     - rails
-  #     - yarn
-  #   environment:
-  #     RAILS_ENV: test
-  #     REDIS_SIDEKIQ_URL: redis://redis:6379
-  #     DATABASE_URL: postgresql://forem:forem@db:5432/PracticalDeveloper_test
-  #     ELASTICSEARCH_URL: http://elasticsearch:9200
-  #   entrypoint: ["dockerize", "-wait", "file:///opt/apps/forem/node_modules/.bin/webpack-dev-server", "-timeout", "2700s"]
-  #   command: ["./bin/webpack-dev-server"]
-
-  # yarn:
-  #   image: forem-test:latest
-  #   container_name: forem_yarn
-  #   environment:
-  #     RAILS_ENV: test
-  #   entrypoint: ["bash", "-c"]
-  #   command: ["yarn install --dev"]
 
   db:
     image: postgres:11-alpine
@@ -92,12 +95,16 @@ services:
       POSTGRES_DB: PracticalDeveloper_test
     ports:
       - "5432:5432"
+    networks:
+      main:
 
   redis:
     image: "redis"
     container_name: forem_redis
     ports:
       - "6379:6379"
+    networks:
+      main:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
@@ -117,3 +124,7 @@ services:
       memlock:
         soft: -1
         hard: -1
+    networks:
+      main:
+networks:
+  main:
