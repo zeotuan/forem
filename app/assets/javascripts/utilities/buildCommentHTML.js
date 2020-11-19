@@ -131,7 +131,7 @@ function react(comment) {
     ${ iconSmallHeart }
     ${ iconSmallHeartFilled }
     <span class="reactions-count" id="reactions-count-${ comment.id }">${ num }</span>
-    <span class="reactions-label hidden m:inline-block">like</span>
+    <span class="reactions-label hidden m:inline-block">&nbsp;like</span>
   </button>`;
 
   return reactButton;
