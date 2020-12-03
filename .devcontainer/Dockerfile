@@ -18,7 +18,7 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/shar
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
 
 RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends postgresql postgresql-contrib
+    && apt-get -y install --no-install-recommends postgresql postgresql-contrib redis-server
 
 # Install Elasticsearch
 RUN curl -sS https://artifacts.elastic.co/GPG-KEY-elasticsearch | (OUT=$(apt-key add - 2>&1) || echo $OUT)
