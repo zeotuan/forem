@@ -28,7 +28,7 @@ RUN sudo apt-get update && apt-get install -y --no-install-recommends elasticsea
 
 RUN sudo -i service elasticsearch start
 RUN sudo service postgresql start
-RUN sudo service redis start
+RUN sudo service redis-server start
 
 
 RUN redis-cli ping
