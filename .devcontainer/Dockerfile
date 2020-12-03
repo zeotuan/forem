@@ -26,7 +26,7 @@ RUN echo "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main" | s
 RUN sudo apt-get update && apt-get install -y --no-install-recommends elasticsearch-oss
 
 
-RUN su vscode usr/share/elasticsearch/bin/elasticsearch -d
+RUN sudo -i service elasticsearch start
 # Install redis with the instructions above and start the server.
 RUN sudo service postgresql start
 RUN redis-cli ping
