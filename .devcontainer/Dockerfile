@@ -23,7 +23,7 @@ RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Install Elasticsearch
 RUN curl -sS https://artifacts.elastic.co/GPG-KEY-elasticsearch | (OUT=$(apt-key add - 2>&1) || echo $OUT)
 RUN echo "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-RUN sudo apt-get update && echo whoami && apt-get install -y install --no-install-recommends elasticsearch-oss
+RUN sudo apt-get update && apt-get install -y --no-install-recommends elasticsearch-oss
 
 
 RUN su vscode -c "usr/share/elasticsearch/bin/elasticsearch -d"
