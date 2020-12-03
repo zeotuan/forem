@@ -26,9 +26,9 @@ RUN echo "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main" | s
 RUN sudo apt-get update && apt-get install -y --no-install-recommends elasticsearch-oss
 
 
-RUN usr/share/elasticsearch/bin/elasticsearch -d
+RUN su vscode usr/share/elasticsearch/bin/elasticsearch -d
 # Install redis with the instructions above and start the server.
 RUN sudo service postgresql start
 RUN redis-cli ping
 RUN curl http://localhost:9200
-RUN sudo su postgres -c "psql -c \"CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;\" "
+RUN sudo su postgres psql -c "CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;/."
