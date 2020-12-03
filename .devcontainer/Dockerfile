@@ -27,8 +27,10 @@ RUN sudo apt-get update && apt-get install -y --no-install-recommends elasticsea
 
 
 RUN sudo -i service elasticsearch start
-# Install redis with the instructions above and start the server.
 RUN sudo service postgresql start
+RUN sudo service redis start
+
+
 RUN redis-cli ping
 RUN curl http://localhost:9200
 RUN sudo su postgres psql -c "CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;/."
