@@ -31,6 +31,4 @@ RUN su vscode -c "usr/share/elasticsearch/bin/elasticsearch -d"
 RUN sudo service postgresql start
 RUN redis-cli ping
 RUN curl http://localhost:9200
-RUN sudo su - postgres
-RUN psql -c "CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;" 
-# exit # to return to codespace user
+RUN sudo su postgres -c "psql -c \"CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;\" "
