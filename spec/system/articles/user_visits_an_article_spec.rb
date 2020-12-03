@@ -27,10 +27,13 @@ RSpec.describe "Views an article", type: :system do
   end
 
   describe "when showing the date" do
-    # TODO: Molly investigating
-    xit "shows the readable publish date", js: true do
+    # TODO: @sre ideally this spec should have js:true enabled since we use
+    # js helpers to ensure the datetime is locale. However, testing locale
+    # datetimes has proven to be very flaky which is why the js is not included
+    # here
+    it "shows the readable publish date" do
       visit article.path
-      expect(page).to have_selector("article time", text: article.readable_publish_date)
+      expect(page).to have_selector("article time", text: article.readable_publish_date.gsub("  ", " "))
     end
 
     it "embeds the published timestamp" do
@@ -52,14 +55,19 @@ RSpec.describe "Views an article", type: :system do
         end
       end
 
-      # TODO: Molly investigating
-      xit "shows the identical readable publish dates in each page", js: true do
+      # TODO: @sre ideally this spec should have js:true enabled since we use
+      # js helpers to ensure the datetime is locale. However, testing locale
+      # datetimes has proven to be very flaky which is why the js is not included
+      # here
+      it "shows the identical readable publish dates in each page" do
         visit first_article.path
-        expect(page).to have_selector("article time", text: first_article.readable_publish_date)
-        expect(page).to have_selector(".crayons-card--secondary time", text: first_article.readable_publish_date)
+        expect(page).to have_selector("article time", text: first_article.readable_publish_date.gsub("  ", " "))
+        expect(page).to have_selector(".crayons-card--secondary time",
+                                      text: first_article.readable_publish_date.gsub("  ", " "))
         visit second_article.path
-        expect(page).to have_selector("article time", text: second_article.readable_publish_date)
-        expect(page).to have_selector(".crayons-card--secondary time", text: second_article.readable_publish_date)
+        expect(page).to have_selector("article time", text: second_article.readable_publish_date.gsub("  ", " "))
+        expect(page).to have_selector(".crayons-card--secondary time",
+                                      text: second_article.readable_publish_date.gsub("  ", " "))
       end
     end
   end
@@ -127,9 +135,9 @@ RSpec.describe "Views an article", type: :system do
       let(:query_params) { "?preview=#{article.password}" }
       let(:article_user) { user }
 
-      it "shows the article edit link" do
+      it "shows the article edit link", js: true do
         visit article_path
-        expect(page).to have_link(link_text, href: href)
+        expect(page.body).to include('display: inline-block;">Click to edit</a>')
       end
     end
 
@@ -139,7 +147,7 @@ RSpec.describe "Views an article", type: :system do
 
       it "does not the article edit link" do
         visit article_path
-        expect(page).not_to have_link(link_text, href: href)
+        expect(page.body).not_to include('display: inline-block;">Click to edit</a>')
       end
     end
 
@@ -150,7 +158,7 @@ RSpec.describe "Views an article", type: :system do
       it "does not the article edit link" do
         sign_out user
         visit article_path
-        expect(page).not_to have_link(link_text, href: href)
+        expect(page.body).not_to include('display: inline-block;">Click to edit</a>')
       end
     end
 

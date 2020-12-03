@@ -1,20 +1,17 @@
 module Constants
   module SiteConfig
     IMAGE_PLACEHOLDER = "https://url/image.png".freeze
+    SVG_PLACEHOLDER = "<svg ...></svg>".freeze
 
     DETAILS = {
-      allow_email_password_registration: {
-        description: "People can sign up using their email and password",
-        placeholder: ""
-      },
-      allow_email_password_login: {
-        description: "People can login using their email and password",
-        placeholder: ""
-      },
       require_captcha_for_email_password_registration: {
         description: "People will be required to fill out a captcha when
           they're creating a new account in your community",
         placeholder: ""
+      },
+      allowed_registration_email_domains: {
+        description: "Restrict registration to only certain emails? (comma-separated list)",
+        placeholder: "dev.to, forem.com, codenewbie.org"
       },
       authentication_providers: {
         description: "How can users sign in?",
@@ -23,6 +20,10 @@ module Constants
       campaign_articles_require_approval: {
         description: "",
         placeholder: "Campaign stories show up on sidebar with approval?"
+      },
+      campaign_call_to_action: {
+        description: "This text populates the call to action button on the campaign sidebar",
+        placeholder: "Share your project"
       },
       campaign_featured_tags: {
         description: "Posts with which tags will be featured in the campaign sidebar (comma separated, letters only)",
@@ -44,6 +45,10 @@ module Constants
         description: "https://url.com/lander",
         placeholder: "URL campaign sidebar image will link to"
       },
+      collective_noun: {
+        description: "Used to describe your collective identity.",
+        placeholder: "Herd"
+      },
       community_copyright_start_year: {
         description: "Used to mark the year this forem was started.",
         placeholder: Time.zone.today.year.to_s
@@ -51,6 +56,10 @@ module Constants
       community_description: {
         description: "Used in meta description tags etc.",
         placeholder: "A fabulous community of kind and welcoming people."
+      },
+      community_emoji: {
+        description: "Used in the title tags across the site alongside the community name",
+        placeholder: ""
       },
       community_member_label: {
         description: "Used to determine what a member will be called e.g developer, hobbyist etc.",
@@ -80,6 +89,9 @@ module Constants
       },
       default_font: {
         description: "Determines the default Base Reading Font (registered users can change this in their UX settings)"
+      },
+      display_email_domain_allow_list_publicly: {
+        description: "Do you want to display the list of allowed domains, or keep it private?"
       },
       display_jobs_banner: {
         description: "Display a jobs banner that points users to the jobs page when they type 'job'" \
@@ -155,7 +167,7 @@ module Constants
       },
       left_navbar_svg_icon: {
         description: "The SVG icon used to expand the left navbar navigation menu. Should be a max of 24x24px.",
-        placeholder: "<svg ...></svg>"
+        placeholder: SVG_PLACEHOLDER
       },
       logo_png: {
         description: "Minimum 1024px, used for PWA etc.",
@@ -163,7 +175,7 @@ module Constants
       },
       logo_svg: {
         description: "Used as the SVG logo of the community",
-        placeholder: "<svg ...></svg>"
+        placeholder: SVG_PLACEHOLDER
       },
       main_social_image: {
         description: "Used as the main image in social networks and OpenGraph",
@@ -252,7 +264,7 @@ module Constants
       },
       right_navbar_svg_icon: {
         description: "The SVG icon used to expand the right navbar navigation menu. Should be a max of 24x24px.",
-        placeholder: "<svg ...></svg>"
+        placeholder: SVG_PLACEHOLDER
       },
       secondary_logo_url: {
         description: "Used as the secondary logo",
@@ -260,7 +272,7 @@ module Constants
       },
       spam_trigger_terms: {
         description: "Individual (case insensitive) phrases that trigger spam alerts, comma separated.",
-        placeholder: "used cares near you, pokemon go hack"
+        placeholder: "used cars near you, pokemon go hack"
       },
       shop_url: {
         description: "Used as the shop url of the community",
@@ -294,10 +306,14 @@ module Constants
         placeholder: "List of valid tags: comma separated, letters only e.g. beginners,javascript,ruby,swift,kotlin"
       },
       suggested_users: {
-        description: "Determines which users are suggested to follow to new users during onboarding (comma" \
-        "separated, letters only). Please note that these users will be shown as a fallback if no" \
+        description: "Determines which users are suggested to follow to new users during onboarding (comma " \
+        "separated, letters only). Please note that these users will be shown as a fallback if no " \
         "recently-active commenters or producers can be suggested",
         placeholder: "List of valid usernames: comma separated, letters only e.g. ben,jess,peter,maestromac,andy,liana"
+      },
+      prefer_manual_suggested_users: {
+        description: "Always show suggested users as suggested people to follow even when " \
+        "auto-suggestion is available"
       },
       tag_feed_minimum_score: {
         description: "Minimum score needed for a post to show up on default tag page.",
