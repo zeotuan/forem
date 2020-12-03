@@ -24,10 +24,10 @@ RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN curl -sS https://artifacts.elastic.co/GPG-KEY-elasticsearch | (OUT=$(apt-key add - 2>&1) || echo $OUT)
 # RUN wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 RUN echo "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-RUN sudo apt-get update
-RUN su vscode -c "apt-get install elasticsearch-oss"
-RUN usr/share/elasticsearch/bin/elasticsearch -d
+RUN sudo apt-get update && echo whoami && apt-get install elasticsearch-oss
 
+
+RUN usr/share/elasticsearch/bin/elasticsearch -d
 # Install redis with the instructions above and start the server.
 RUN sudo service postgresql start
 RUN redis-cli ping
