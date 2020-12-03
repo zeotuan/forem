@@ -24,7 +24,7 @@
 
     <div class="crayons-header__links">
       <% if user_signed_in? %>
-      <a href="/new" class="crayons-btn hidden mr-2 whitespace-nowrap s:block">Write a post</a>
+        <a href="/new" class="crayons-btn hidden mr-2 whitespace-nowrap s:block">Write a post</a>
 
         <a id="moderation-link" class="crayons-header__link trusted-visible-block" aria-label="Moderation" href="<%= mod_path %>">
           <%= inline_svg_tag("mod.svg", aria: true, class: "crayons-icon", title: "Moderation") %>
