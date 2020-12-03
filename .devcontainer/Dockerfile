@@ -17,10 +17,10 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su vscode -c "source /usr/local/shar
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
 
-# sudo apt install postgresql postgresql-contrib elasticsearch
+RUN sudo apt install postgresql postgresql-contrib elasticsearch
 
-RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends postgresql postgresql-contrib elasticsearch
+# RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends postgresql postgresql-contrib elasticsearch
 
 
 RUN elasticsearch-7.5.2/bin/elasticsearch -d
