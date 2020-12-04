@@ -31,6 +31,6 @@ RUN sudo service postgresql start
 RUN sudo service redis-server start
 
 
-RUN redis-cli ping
-RUN curl http://localhost:9200
-RUN sudo su postgres psql -c "CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;/."
+# RUN redis-cli ping
+# RUN curl http://localhost:9200
+# RUN sudo su postgres psql -c "CREATE ROLE codespace WITH SUPERUSER CREATEDB CREATEROLE LOGIN;/."
