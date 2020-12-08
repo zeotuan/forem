@@ -16,7 +16,7 @@ RUN if [ "${INSTALL_DOCKER}" = "true" ]; then \
 USER codespace
 
 # ** [Optional] Uncomment this section to install additional packages. **
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends postgresql postgresql-contrib redis-server yarn nvm
 
 # Install Elasticsearch
