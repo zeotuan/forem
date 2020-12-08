@@ -1,6 +1,6 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.148.1/containers/codespaces-linux/.devcontainer/base.Dockerfile
 
-FROM mcr.microsoft.com/vscode/devcontainers/universal:0-linux
+FROM mcr.microsoft.com/vscode/devcontainers/universal:latest
 
 USER root
 
