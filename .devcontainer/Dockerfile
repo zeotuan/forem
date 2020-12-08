@@ -15,9 +15,23 @@ RUN if [ "${INSTALL_DOCKER}" = "true" ]; then \
 
 USER codespace
 
+# [Option] Install Node.js 
+ARG INSTALL_NODE="true"
+ARG NODE_VERSION="none"
+ENV NVM_DIR=/usr/local/share/nvm
+ENV NVM_SYMLINK_CURRENT=true \
+    PATH=${NVM_DIR}/current/bin:${PATH}
+COPY library-scripts/node-debian.sh /tmp/library-scripts/
+RUN if [ "$INSTALL_NODE" = "true" ]; then bash /tmp/library-scripts/node-debian.sh "${NVM_DIR}" "${NODE_VERSION}" "${USERNAME}"; fi \
+
+
+RUN rvm install 2.7.2
+RUN nvm install 14.14
+
+
 # ** [Optional] Uncomment this section to install additional packages. **
 RUN sudo apt-get update && export DEBIAN_FRONTEND=noninteractive
-RUN sudo apt-get -y install --no-install-recommends postgresql postgresql-contrib redis-server yarn nvm
+RUN sudo apt-get -y install --no-install-recommends postgresql postgresql-contrib redis-server yarn
 
 # Install Elasticsearch
 RUN curl -sS https://artifacts.elastic.co/GPG-KEY-elasticsearch | (OUT=$(apt-key add - 2>&1) || echo $OUT)
