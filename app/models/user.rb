@@ -268,12 +268,12 @@ class User < ApplicationRecord
   # NOTE: @citizen428 Temporary while migrating to generalized profiles
   after_save { |user| user.profile&.save if user.profile&.changed? }
   after_save :bust_cache
-  after_save :subscribe_to_mailchimp_newsletter
 
   after_create_commit :send_welcome_notification, :estimate_default_language
   after_commit :index_to_elasticsearch, on: %i[create update]
   after_commit :sync_related_elasticsearch_docs, on: %i[create update]
   after_commit :remove_from_elasticsearch, on: [:destroy]
+  after_commit :subscribe_to_mailchimp_newsletter
 
   def self.dev_account
     find_by(id: SiteConfig.staff_user_id)
