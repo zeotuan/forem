@@ -72,14 +72,20 @@
     &__header {
       border-bottom: 2px solid var(--card-color);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
       padding: var(--modal-header-padding);
       flex-shrink: 0;
+      justify-content: space-between;
 
       &__title {
         font-size: var(--modal-header-font-size);
       }
+    }
+
+    &__header-plain {
+      display: flex;
+      flex-shrink: 0;
+      padding: var(--modal-header-padding);
+      justify-content: flex-end;
     }
 
     &__body {
@@ -88,6 +94,16 @@
       padding: var(--modal-body-padding);
       max-height: 100%;
       overflow-y: auto;
+    }
+
+    &__button-group {
+      padding-top: var(--modal-body-padding);
+      .crayons-btn {
+        border-radius: var(--radius);
+      }
+      :first-child {
+        margin-right: 1rem;
+      }
     }
   }
 

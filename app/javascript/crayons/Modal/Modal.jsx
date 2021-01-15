@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import PropTypes from 'prop-types';
 import { defaultChildrenPropTypes } from '../../common-prop-types';
-import { Button } from '@crayons';
+import { Button, ButtonGroup } from '@crayons';
 
 function getAdditionalClassNames({ size, className }) {
   let additionalClassNames = '';
@@ -16,6 +16,27 @@ function getAdditionalClassNames({ size, className }) {
 
   return additionalClassNames;
 }
+
+const ActionButtons = ({ primaryAction, secondaryAction, type }) => {
+  return (
+    <ButtonGroup className="crayons-modal__box__button-group">
+      <Button
+        aria-label="Confirm"
+        variant={type ?? 'primary'}
+        onClick={primaryAction.onAction}
+      >
+        {primaryAction.content}
+      </Button>
+      <Button
+        aria-label="Cancel"
+        variant="secondary"
+        onClick={secondaryAction.onAction}
+      >
+        {secondaryAction.content}
+      </Button>
+    </ButtonGroup>
+  );
+};
 
 const CloseIcon = () => (
   <svg
@@ -39,6 +60,9 @@ export const Modal = ({
   title,
   overlay,
   onClose,
+  primaryAction,
+  secondaryAction,
+  type,
 }) => {
   return (
     <div
@@ -54,19 +78,32 @@ export const Modal = ({
         aria-label="modal"
         className="crayons-modal__box"
       >
-        {title.length > 0 && title && (
-          <div className="crayons-modal__box__header">
-            <h2>{title}</h2>
-            <Button
-              icon={CloseIcon}
-              variant="ghost"
-              contentType="icon"
-              aria-label="Close"
-              onClick={onClose}
+        <div
+          className={
+            title
+              ? 'crayons-modal__box__header'
+              : 'crayons-modal__box__header-plain'
+          }
+        >
+          {title && title.length > 0 && <h2>{title}</h2>}
+          <Button
+            icon={CloseIcon}
+            variant="ghost"
+            contentType="icon"
+            aria-label="Close"
+            onClick={secondaryAction ? secondaryAction.onAction : onClose}
+          />
+        </div>
+        <div className="crayons-modal__box__body">
+          {children}
+          {primaryAction && (
+            <ActionButtons
+              primaryAction={primaryAction}
+              secondaryAction={secondaryAction}
+              type={type}
             />
-          </div>
-        )}
-        <div className="crayons-modal__box__body">{children}</div>
+          )}
+        </div>
       </div>
       {overlay && (
         <div data-testid="modal-overlay" className="crayons-modal__overlay" />
@@ -81,13 +118,23 @@ Modal.defaultProps = {
   className: undefined,
   overlay: true,
   onClose: undefined,
+  confirmation: false,
 };
 
 Modal.propTypes = {
   children: defaultChildrenPropTypes.isRequired,
   className: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   overlay: PropTypes.bool,
-  onClose: PropTypes.func,
+  primaryAction: PropTypes.shape({
+    content: PropTypes.string,
+    onAction: PropTypes.func,
+  }),
+  secondaryAction: PropTypes.shape({
+    content: PropTypes.string,
+    onAction: PropTypes.func,
+  }),
   size: PropTypes.oneOf(['default', 's', 'm']).isRequired,
+  type: PropTypes.oneOf(['secondary', 'outlined', 'danger', 'primary']),
+  url: PropTypes.string,
 };

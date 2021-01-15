@@ -8,6 +8,7 @@ import { submitArticle, previewArticle } from './actions';
 /* global activateRunkitTags */
 
 import { EditorActions, Form, Header, Help, Preview } from './components';
+import { Modal } from '@crayons';
 
 /*
   Although the state fields: id, description, canonicalUrl, series, allSeries and
@@ -98,6 +99,7 @@ export default class ArticleForm extends Component {
       siteLogo,
       helpFor: null,
       helpPosition: null,
+      showModal: false,
       ...previousContentState,
     };
   }
@@ -202,6 +204,16 @@ export default class ArticleForm extends Component {
     const { version } = this.state;
     localStorage.removeItem(`editor-${version}-${this.url}`);
     window.removeEventListener('beforeunload', this.localStoreContent);
+  };
+
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+  };
+
+  navigateHome = () => {
+    window.location.href = '/';
   };
 
   onPublish = (e) => {
@@ -312,6 +324,7 @@ export default class ArticleForm extends Component {
           organizationId={organizationId}
           onToggle={this.handleOrgIdChange}
           siteLogo={siteLogo}
+          displayModal={this.toggleModal}
         />
 
         {previewShowing ? (
@@ -343,7 +356,22 @@ export default class ArticleForm extends Component {
           helpPosition={helpPosition}
           version={version}
         />
-
+        {this.state.showModal && (
+          <Modal
+            primaryAction={{
+              content: 'Got it',
+              onAction: this.navigateHome,
+            }}
+            secondaryAction={{
+              content: 'Nevermind',
+              onAction: this.toggleModal,
+            }}
+            type="danger"
+            title="You have unsaved changes"
+          >
+            <p> Hold on, this will send you home without saving your post</p>
+          </Modal>
+        )}
         <EditorActions
           published={published}
           version={version}

@@ -10,11 +10,4 @@ describe('<Close />', () => {
 
     expect(results).toHaveNoViolations();
   });
-
-  it('renders the close button', () => {
-    const { getByTitle } = render(<Close />);
-    const icon = getByTitle(/Close the editor/i);
-
-    expect(icon.closest('a').getAttribute('href')).toEqual('/');
-  });
 });

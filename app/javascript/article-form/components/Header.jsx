@@ -11,6 +11,7 @@ export const Header = ({
   organizationId,
   onToggle,
   siteLogo,
+  displayModal,
 }) => {
   return (
     <div className="crayons-article-form__header">
@@ -25,7 +26,7 @@ export const Header = ({
         onToggle={onToggle}
       />
       <Tabs onPreview={onPreview} previewShowing={previewShowing} />
-      <Close />
+      <Close displayModal={displayModal} />
     </div>
   );
 };
