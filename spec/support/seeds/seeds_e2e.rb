@@ -112,6 +112,52 @@ end
 
 ##############################################################################
 
+trusted_user = seeder.create_if_doesnt_exist(User, "email", "trusted-user@forem.com") do
+  User.create!(
+    name: "Trusted User",
+    email: "trusted-user@forem.local",
+    username: "trusted_user",
+    summary: Faker::Lorem.paragraph_by_chars(number: 199, supplemental: false),
+    profile_image: File.open(Rails.root.join("app/assets/images/#{rand(1..40)}.png")),
+    website_url: Faker::Internet.url,
+    email_comment_notifications: false,
+    email_follower_notifications: false,
+    confirmed_at: Time.current,
+    password: "password",
+    password_confirmation: "password",
+    saw_onboarding: true,
+    checked_code_of_conduct: true,
+    checked_terms_and_conditions: true,
+    editor_version: "v2",
+  )
+end
+
+trusted_user.add_role("trusted")
+
+##############################################################################
+
+seeder.create_if_doesnt_exist(User, "email", "not-trusted-user@forem.com") do
+  User.create!(
+    name: "Not Trusted User",
+    email: "not-trusted-user@forem.local",
+    username: "not_trusted_user",
+    summary: Faker::Lorem.paragraph_by_chars(number: 199, supplemental: false),
+    profile_image: File.open(Rails.root.join("app/assets/images/#{rand(1..40)}.png")),
+    website_url: Faker::Internet.url,
+    email_comment_notifications: false,
+    email_follower_notifications: false,
+    confirmed_at: Time.current,
+    password: "password",
+    password_confirmation: "password",
+    saw_onboarding: true,
+    checked_code_of_conduct: true,
+    checked_terms_and_conditions: true,
+    editor_version: "v2",
+  )
+end
+
+##############################################################################
+
 seeder.create_if_none(NavigationLink) do
   protocol = ApplicationConfig["APP_PROTOCOL"].freeze
   domain = Rails.application&.initialized? ? SiteConfig.app_domain : ApplicationConfig["APP_DOMAIN"]
