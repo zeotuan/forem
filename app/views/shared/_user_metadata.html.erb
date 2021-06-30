@@ -34,35 +34,26 @@
         </li>
       <% end %>
     <% else %>
-
-      <% if actor.email_public && context !="sidebar" %>
+      <% user_email = actor.decorate.profile_email %>
+      <% if user_email && context != "sidebar" %>
         <li>
           <div class="key">
             Email
           </div>
           <div class="value">
-            <a href="mailto:<%= actor.email %>">
-              <%= actor.email %>
+            <a href="mailto:<%= user_email %>">
+              <%= user_email %>
             </a>
           </div>
         </li>
       <% end %>
-      <% if actor.employment_title.present? %>
+      <% if actor.work.present? %>
         <li>
           <div class="key">
             Work
           </div>
           <div class="value">
-            <%= actor.employment_title %>
-            <% if actor.employer_name.present? %>
-              <span class="opacity-50"> at </span>
-              <% if actor.employer_url.present? %>
-                <a href="<%= actor.employer_url %>" target="_blank" rel="noopener">
-                  <%= actor.employer_name %>
-                </a>
-              <% else %>
-                <%= actor.employer_name %>
-              <% end %>
+            <%= actor.work %>
           </div>
         </li>
       <% end %>
