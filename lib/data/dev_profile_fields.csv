@@ -7,4 +7,3 @@ Available for,text_area,,"What kinds of collaborations or discussions are you av
 Brand color 1,color_field,#000000,"Used for backgrounds, borders etc.",Branding,settings_only,false
 Brand color 2,color_field,#000000,Used for texts (usually put on Brand color 1).,Branding,settings_only,false
 Work,text_field,"What do you do? Example: CEO at ACME Inc.",,Work,header,false
-
