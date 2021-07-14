@@ -88,7 +88,7 @@
   "devDependencies": {
     "@stoplight/spectral": "5.9.1",
     "@storybook/addon-a11y": "^6.3.1",
-    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-actions": "^6.3.4",
     "@storybook/addon-docs": "^6.3.1",
     "@storybook/addon-knobs": "^6.2.9",
     "@storybook/addon-links": "^6.3.1",
@@ -98,7 +98,7 @@
     "@storybook/preact": "^6.2.9",
     "@testing-library/cypress": "^7.0.6",
     "@testing-library/dom": "^7.31.2",
-    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/preact": "^2.0.1",
     "@testing-library/preact-hooks": "^1.1.0",
     "@testing-library/user-event": "^13.1.9",
